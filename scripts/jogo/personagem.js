@@ -1,38 +1,41 @@
-class Hero {
-  constructor(image, heroWidth, heroHeight) {
-    this.image = image;
-    this.heroWidth = heroWidth;
-    this.heroHeight = heroHeight;
-    this.matrix = [
-      [0, 0],
-      [220, 0],
-      [440, 0],
-      [660, 0],
-      [0, 270],
-      [220, 270],
-      [440, 270],
-      [660, 270],
-      [0, 540],
-      [220, 540],
-      [440, 540],
-      [660, 540],
-      [0, 810],
-      [220, 810],
-      [440, 810],
-      [660, 810],
-    ];
-    this.currentFrame = 0;
+
+class Personagem extends Animacao{
+    constructor(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite){
+    super(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite)
+    this.yInicial = height - this.altura;
+    this.y = this.yInicial;
+    this.velocidadeDoPulo = 0;
+    this.gravidade = 3;
+    
+  }
+  pula(){
+     this.velocidadeDoPulo = -30;
   }
   
-  show() {
-    image(this.image, 0, height - heroHeight, heroWidth, heroHeight, this.matrix[this.currentFrame][0], this.matrix[this.currentFrame][1], 220, 270); 
-    this.animation();
-  }
-  
-  animation() {
-    this.currentFrame++;
-    if (this.currentFrame >= this.matrix.length) {
-      this.currentFrame = 0;
+  aplicaGravidade(){
+    this.y += this.velocidadeDoPulo;
+    this.velocidadeDoPulo += this.gravidade; 
+    
+    if(this.y > this.yInicial){
+      this.y = this.yInicial;
     }
+    
+  }
+  
+  estaColidindo(inimigo){
+    const precisao = .7;
+    const colisao = collideRectRect(
+      this.x, 
+      this.y, 
+      this.largura * precisao, 
+      this.altura * precisao,
+      inimigo.x,
+      inimigo.y,
+      inimigo.largura * precisao,
+      inimigo.altura * precisao
+    );
+    
+    return colisao;
+    
   }
 }
