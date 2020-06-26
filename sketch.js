@@ -1,10 +1,8 @@
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //createCanvas(1024, 800);
-
-  frameRate(40);
-  //somDoJogo.loop();
-  jogo = new Jogo();
+  frameRate(40)
+  somDoJogo.loop();
+  jogo = new Jogo()
   telaInicial = new TelaInicial();
   jogo.setup();
   cenas = {
@@ -15,12 +13,9 @@ function setup() {
 }
 
 function keyPressed() {
-  jogo.keyPressed(key);
+ jogo.keyPressed(key);
 }
 
 function draw() {
-  //if (cenaAtual === 'jogo') {
-  //  jogo.draw();
-  //}
   cenas[cenaAtual].draw();
 }
